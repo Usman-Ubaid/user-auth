@@ -11,3 +11,7 @@ export const connection = async () => {
     console.log(error);
   }
 };
+
+export const getDbCollection = () => {
+  return client.db("user-auth").collection("users");
+};

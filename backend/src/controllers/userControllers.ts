@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { client } from "../db/dbConnection";
+import { getDbCollection } from "../db/dbConnection";
 import { User } from "./types/User";
 import { hashPassword } from "../module/auth";
 
@@ -14,9 +14,8 @@ export const userSignup = async (req: Request, res: Response) => {
     if (!username || !email || !password) {
       res.status(400).json({ message: "Please fill all the fields." });
     } else {
-      const db = client.db("user-auth");
-      const collection = db.collection("users");
       const user = { username, email, password: await hashPassword(password) };
+      const collection = getDbCollection();
       const result = await collection.insertOne(user);
 
       res.json({ message: user, result });
