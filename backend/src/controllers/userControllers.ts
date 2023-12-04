@@ -9,26 +9,30 @@ export const userSignin = (req: Request, res: Response) => {
 
 export const userSignup = async (req: Request, res: Response) => {
   try {
-    const { username, email, password }: User = req.body;
+    const { username, email, password } = req.body as User;
 
     if (!username || !email || !password) {
       res.status(400).json({ message: "Please fill all the fields." });
-    } else {
-      const user = {
-        username,
-        email,
-        password: await hashPassword(password),
-        createdAt: new Date().toISOString(),
-      };
-      const result = await getDbCollection().insertOne(user);
-
-      res
-        .status(201)
-        .json({
-          message: "User created successfully",
-          userId: result.insertedId,
-        });
     }
+
+    const userExists = await getDbCollection().findOne({ email });
+
+    if (userExists) {
+      res.status(400).json({ message: "User already exists" });
+    }
+
+    const user = {
+      username,
+      email,
+      password: await hashPassword(password),
+      createdAt: new Date().toISOString(),
+    };
+    const result = await getDbCollection().insertOne(user);
+
+    res.status(201).json({
+      message: "User created successfully",
+      userId: result.insertedId,
+    });
   } catch (error) {
     console.error(error);
     res
