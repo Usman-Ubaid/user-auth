@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { client } from "../db/dbConnection";
 import { User } from "./types/User";
+import { hashPassword } from "../module/auth";
 
 export const userSignin = (req: Request, res: Response) => {
   res.json({ message: "User Sign in" });
@@ -15,10 +16,10 @@ export const userSignup = async (req: Request, res: Response) => {
     } else {
       const db = client.db("user-auth");
       const collection = db.collection("users");
-      const user = { username, email, password };
+      const user = { username, email, password: await hashPassword(password) };
       const result = await collection.insertOne(user);
 
-      res.json({ message: result });
+      res.json({ message: user, result });
     }
   } catch (error) {
     console.log(error);
