@@ -14,14 +14,23 @@ export const userSignup = async (req: Request, res: Response) => {
     if (!username || !email || !password) {
       res.status(400).json({ message: "Please fill all the fields." });
     } else {
-      const user = { username, email, password: await hashPassword(password) };
-      const collection = getDbCollection();
-      const result = await collection.insertOne(user);
+      const user = {
+        username,
+        email,
+        password: await hashPassword(password),
+        createdAt: new Date().toISOString(),
+      };
+      const result = await getDbCollection().insertOne(user);
 
-      res.json({ message: user, result });
+      res
+        .status(201)
+        .json({
+          message: "User created successfully",
+          userId: result.insertedId,
+        });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res
       .status(500)
       .json({ message: "An error occurred while creating the user." });
