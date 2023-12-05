@@ -1,15 +1,37 @@
 import { Request, Response } from "express";
 import { getDbCollection } from "../db/dbConnection";
-import { User } from "./types/User";
-import { hashPassword } from "../module/auth";
+import { Credentials, NewUserCredentials, User } from "./types/User";
+import { comparePasswords, hashPassword } from "../module/auth";
 
-export const userSignin = (req: Request, res: Response) => {
-  res.json({ message: "User Sign in" });
+export const userSignin = async (req: Request, res: Response) => {
+  const { email, password } = req.body as Credentials;
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "Please fill all the fields" });
+    } else {
+      const user = (await getDbCollection().findOne({ email })) as User;
+
+      if (user && (await comparePasswords(password, user.password))) {
+        res.status(200).json({
+          message: "success",
+          user: {
+            userId: user._id,
+            username: user.username,
+            email: user.email,
+          },
+        });
+      } else {
+        return res.status(400).json({ message: "invalid credentials" });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const userSignup = async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body as User;
+    const { username, email, password } = req.body as NewUserCredentials;
 
     if (!username || !email || !password) {
       res.status(400).json({ message: "Please fill all the fields." });
