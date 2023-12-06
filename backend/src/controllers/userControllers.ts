@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getDbCollection } from "../db/dbConnection";
 import { Credentials, NewUserCredentials, User } from "./types/User";
-import { comparePasswords, hashPassword } from "../module/auth";
+import { comparePasswords, generateJWT, hashPassword } from "../module/auth";
 
 export const userSignin = async (req: Request, res: Response) => {
   const { email, password } = req.body as Credentials;
@@ -29,7 +29,7 @@ export const userSignin = async (req: Request, res: Response) => {
   }
 };
 
-export const userSignup = async (req: Request, res: Response) => {
+export const registerUser = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body as NewUserCredentials;
 
@@ -40,7 +40,7 @@ export const userSignup = async (req: Request, res: Response) => {
     const userExists = await getDbCollection().findOne({ email });
 
     if (userExists) {
-      res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const user = {
@@ -54,6 +54,7 @@ export const userSignup = async (req: Request, res: Response) => {
     res.status(201).json({
       message: "User created successfully",
       userId: result.insertedId,
+      token: generateJWT(result.insertedId),
     });
   } catch (error) {
     console.error(error);
