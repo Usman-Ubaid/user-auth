@@ -13,6 +13,6 @@ export const comparePasswords = (userPassword: string, dbPassword: string) => {
   return bcrypt.compare(userPassword, dbPassword);
 };
 
-export const generateJWT = (id: ObjectId) => {
-  return jwt.sign({ id }, myEnvVariables.JWT_SECRET);
+export const generateJWT = (user: Object) => {
+  return jwt.sign({ user }, myEnvVariables.JWT_SECRET);
 };

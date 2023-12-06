@@ -3,7 +3,7 @@ import { getDbCollection } from "../db/dbConnection";
 import { Credentials, NewUserCredentials, User } from "./types/User";
 import { comparePasswords, generateJWT, hashPassword } from "../module/auth";
 
-export const userSignin = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body as Credentials;
   try {
     if (!email || !password) {
@@ -18,6 +18,7 @@ export const userSignin = async (req: Request, res: Response) => {
             userId: user._id,
             username: user.username,
             email: user.email,
+            token: generateJWT(user),
           },
         });
       } else {
@@ -54,7 +55,7 @@ export const registerUser = async (req: Request, res: Response) => {
     res.status(201).json({
       message: "User created successfully",
       userId: result.insertedId,
-      token: generateJWT(result.insertedId),
+      token: generateJWT(result),
     });
   } catch (error) {
     console.error(error);
