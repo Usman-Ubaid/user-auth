@@ -1,5 +1,5 @@
 import express from "express";
-import { myEnvVariables } from "./db/env";
+import { myEnvVariables } from "./types/env";
 import { connection } from "./db/dbConnection";
 import { router } from "./routes/userRoutes";
 

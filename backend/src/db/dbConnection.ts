@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import { myEnvVariables } from "./env";
+import { myEnvVariables } from "../types/env";
 
 export const client = new MongoClient(myEnvVariables.DATABASE_URL);
 
