@@ -1,14 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyJWT } from "../module/auth";
-import { ObjectId } from "mongodb";
-
-interface CustomRequest extends Request {
-  user?: {
-    _id: ObjectId;
-    username: string;
-    email: string;
-  };
-}
+import { CustomRequest } from "../types/customRequest";
 
 export const protect = async (
   req: CustomRequest,

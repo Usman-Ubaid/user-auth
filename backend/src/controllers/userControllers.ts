@@ -1,16 +1,9 @@
 import { Request, Response } from "express";
 import { getDbCollection } from "../db/dbConnection";
-import { Credentials, NewUserCredentials, User } from "./types/User";
+import { Credentials, NewUserCredentials, User } from "../types/user";
 import { comparePasswords, generateJWT, hashPassword } from "../module/auth";
 import { ObjectId } from "mongodb";
-
-interface CustomRequest extends Request {
-  user?: {
-    _id: ObjectId;
-    username: string;
-    email: string;
-  };
-}
+import { CustomRequest } from "../types/customRequest";
 
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body as Credentials;
@@ -78,17 +71,22 @@ export const dashboard = async (req: CustomRequest, res: Response) => {
   const user = req.user;
 
   try {
-    const dbUser = await getDbCollection().findOne({ email: user?.email });
+    const dbUser = await getDbCollection().findOne({
+      _id: new ObjectId(user?._id),
+    });
 
     if (dbUser) {
+      const { _id, email, username } = dbUser;
       return res.status(200).json({
         message: "Welcome to Dashboard",
         user: {
-          _id: dbUser._id,
-          email: dbUser.email,
-          username: dbUser.username,
+          _id,
+          email,
+          username,
         },
       });
+    } else {
+      return res.status(404).json({ message: "User not found" });
     }
   } catch (error) {
     console.error(error);
