@@ -1,14 +1,17 @@
-import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { myEnvVariables } from "../db/env";
-import { getDbCollection } from "../db/dbConnection";
+import { verifyJWT } from "../module/auth";
+import { ObjectId } from "mongodb";
 
 interface CustomRequest extends Request {
-  user: string | jwt.JwtPayload | undefined;
+  user?: {
+    _id: ObjectId;
+    username: string;
+    email: string;
+  };
 }
 
 export const protect = async (
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -21,21 +24,19 @@ export const protect = async (
   const [_, token] = bearer.split(" ");
 
   if (!token) {
-    return res.status(401).json({ message: "Invalid Token" });
+    return res.status(401).json({ message: "No Token found" });
   }
 
   try {
-    const user = jwt.verify(token, myEnvVariables.JWT_SECRET, (err, user) => {
-      if (err) {
-        return res.status(403).json({ message: "Invalid" });
-      }
-      if (user) {
-        (req as CustomRequest).user = user;
-      }
-    });
+    const payload = verifyJWT(token);
+
+    req.user = {
+      _id: payload.user._id,
+      username: payload.user.username,
+      email: payload.user.email,
+    };
     next();
   } catch (error) {
-    console.error(error);
-    res.status(401).json({ message: "Not Authorized" });
+    return res.status(401).json({ message: "Not Authorized" });
   }
 };

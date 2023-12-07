@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { myEnvVariables } from "../db/env";
 
 const saltRounds = 10;
@@ -17,10 +17,6 @@ export const generateJWT = (user: Object) => {
 };
 
 export const verifyJWT = (token: string) => {
-  try {
-    const decode = jwt.verify(token, myEnvVariables.JWT_SECRET);
-    return { payload: decode };
-  } catch (error) {
-    return { payload: null };
-  }
+  const decode = jwt.verify(token, myEnvVariables.JWT_SECRET);
+  return decode as JwtPayload;
 };
