@@ -2,6 +2,15 @@ import { Request, Response } from "express";
 import { getDbCollection } from "../db/dbConnection";
 import { Credentials, NewUserCredentials, User } from "./types/User";
 import { comparePasswords, generateJWT, hashPassword } from "../module/auth";
+import { ObjectId } from "mongodb";
+
+interface CustomRequest extends Request {
+  user?: {
+    _id: ObjectId;
+    username: string;
+    email: string;
+  };
+}
 
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body as Credentials;
@@ -22,7 +31,7 @@ export const loginUser = async (req: Request, res: Response) => {
           },
         });
       } else {
-        return res.status(400).json({ message: "invalid credentials" });
+        return res.status(400).json({ message: "Invalid Credentials" });
       }
     }
   } catch (error) {
@@ -62,5 +71,27 @@ export const registerUser = async (req: Request, res: Response) => {
     res
       .status(500)
       .json({ message: "An error occurred while creating the user." });
+  }
+};
+
+export const dashboard = async (req: CustomRequest, res: Response) => {
+  const user = req.user;
+
+  try {
+    const dbUser = await getDbCollection().findOne({ email: user?.email });
+
+    if (dbUser) {
+      return res.status(200).json({
+        message: "Welcome to Dashboard",
+        user: {
+          _id: dbUser._id,
+          email: dbUser.email,
+          username: dbUser.username,
+        },
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
