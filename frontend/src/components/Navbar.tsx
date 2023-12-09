@@ -9,13 +9,11 @@ const Navbar = () => {
   return (
     <div>
       <ul>
-        <li>
-          {linkItems.map((item) => (
-            <Link key={item.id} to={item.link}>
-              {item.text}
-            </Link>
-          ))}
-        </li>
+        {linkItems.map((item) => (
+          <li key={item.id}>
+            <Link to={item.link}>{item.text}</Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
