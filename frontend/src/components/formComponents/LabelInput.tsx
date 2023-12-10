@@ -7,8 +7,8 @@ type LabelInputProps = {
 const LabelInput = ({ label, name, id }: LabelInputProps) => {
   return (
     <div className="input-wrapper">
-      <input type="text" name={name} id={id} />
-      <label className="label">{label}</label>
+      <input type="text" name={name} id={id} placeholder={label} />
+      <label htmlFor={name}>{label}</label>
     </div>
   );
 };

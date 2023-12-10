@@ -28,13 +28,14 @@ a:hover {
 
 .primary-nav {
   padding: 1.5rem 9% 0 0;
+  margin-bottom: 3rem;
 }
 
 .navbar-list {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 /* FORM  */
