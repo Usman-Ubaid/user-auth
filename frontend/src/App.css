@@ -75,7 +75,10 @@ input {
   font-size: 18px;
   outline: none;
   transition: all 0.3s;
-  color: #fff;
+}
+
+input::placeholder {
+  opacity: 0;
 }
 
 input:focus {
@@ -90,6 +93,7 @@ label {
   z-index: 1;
   pointer-events: none;
   padding: 0 2px;
+  color: #888;
 }
 
 label::before {
@@ -103,7 +107,8 @@ label::before {
   z-index: -1;
 }
 
-input:focus + label {
+input:focus + label,
+input:not(:placeholder-shown) + label {
   top: -20%;
   color: #6c63ff;
   font-size: 14px;
