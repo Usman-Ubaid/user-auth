@@ -1,4 +1,4 @@
-import { signupRequest } from "../api/signupRequest";
+import { signinRequest } from "../api/authRequest";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
@@ -16,9 +16,14 @@ const Signup = () => {
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signupRequest(formData);
+    const response = await signinRequest(formData, "signup");
+    if (!response) {
+      console.log("Error registering");
+      return;
+    }
+    console.log(response?.userId);
   };
   return (
     <div>
