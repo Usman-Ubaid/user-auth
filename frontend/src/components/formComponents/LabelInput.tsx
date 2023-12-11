@@ -14,6 +14,7 @@ const LabelInput = ({ label, name, id, onChange }: LabelInputProps) => {
         id={id}
         placeholder={label}
         onChange={onChange}
+        required
       />
       <label htmlFor={name}>{label}</label>
     </div>
