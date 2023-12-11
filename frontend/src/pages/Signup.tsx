@@ -5,20 +5,27 @@ import { useForm } from "../hooks/useForm";
 import { SignupFormState } from "../types/formStateTypes";
 
 const Signup = () => {
-  const { formData, handleInputChange } = useForm<SignupFormState>({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const { formData, handleInputChange, setFormData } = useForm<SignupFormState>(
+    {
+      username: "",
+      email: "",
+      password: "",
+    }
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await signinRequest(formData, "signup");
-    if (!response) {
-      console.log("Error registering");
-      return;
+    const response = await signinRequest(formData, "api/signup");
+    if (response) {
+      console.log("Successfully Registered");
+    } else {
+      console.log("Failed to Register");
     }
-    console.log("Successfully Registered");
+    setFormData({
+      username: "",
+      email: "",
+      password: "",
+    });
   };
   return (
     <div>
@@ -33,18 +40,21 @@ const Signup = () => {
               name="username"
               id="username"
               onChange={handleInputChange}
+              value={formData.username}
             />
             <LabelInput
               label="Email"
               name="email"
               id="email"
               onChange={handleInputChange}
+              value={formData.email}
             />
             <LabelInput
               label="Password"
               name="password"
               id="password"
               onChange={handleInputChange}
+              value={formData.password}
             />
             <button className="btn" type="submit">
               Register

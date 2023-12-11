@@ -16,7 +16,7 @@ const Signin = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await signinRequest(formData, "signin");
+    const response = await signinRequest(formData, "api/signin");
     if (!response) {
       console.log("Invalid Credentials");
       return;
@@ -38,12 +38,14 @@ const Signin = () => {
             name="email"
             id="email"
             onChange={handleInputChange}
+            value={formData.email}
           />
           <LabelInput
             label="Password"
             name="password"
             id="password"
             onChange={handleInputChange}
+            value={formData.password}
           />
           <button className="btn" type="submit">
             Login
