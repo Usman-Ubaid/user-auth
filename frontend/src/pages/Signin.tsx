@@ -1,3 +1,4 @@
+import { signinRequest } from "../api/signinAPI";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
@@ -13,9 +14,14 @@ const Signin = () => {
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Data: ", formData);
+    const response = await signinRequest(formData);
+    if (!response) {
+      console.log("Invalid Credentials");
+      return;
+    }
+    console.log(response);
   };
 
   return (
