@@ -2,10 +2,11 @@ type LabelInputProps = {
   label: string;
   name: string;
   id: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const LabelInput = ({ label, name, id, onChange }: LabelInputProps) => {
+const LabelInput = ({ label, name, id, onChange, value }: LabelInputProps) => {
   return (
     <div className="input-wrapper">
       <input
@@ -14,6 +15,7 @@ const LabelInput = ({ label, name, id, onChange }: LabelInputProps) => {
         id={id}
         placeholder={label}
         onChange={onChange}
+        value={value}
         required
       />
       <label htmlFor={name}>{label}</label>

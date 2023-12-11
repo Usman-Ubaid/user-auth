@@ -16,14 +16,12 @@ export const signinRequest = async <T>(
       }
     );
 
-    if (resource === "signin" && !postData.ok) {
-      console.log("Error signing in");
-      return;
-    }
-
-    if (resource === "signup" && !postData.ok) {
-      console.log("Failed to register");
-      return;
+    if (!postData.ok) {
+      if (resource === "signin") {
+        throw new Error("Error signing in");
+      } else if (resource === "signup") {
+        throw new Error("Failed to register");
+      }
     }
 
     const response: ResponseType = await postData.json();
