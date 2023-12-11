@@ -1,3 +1,4 @@
+import { signupRequest } from "../api/signupRequest";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
@@ -17,7 +18,7 @@ const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("FormData: ", formData);
+    signupRequest(formData);
   };
   return (
     <div>
