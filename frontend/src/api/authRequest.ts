@@ -1,20 +1,4 @@
-type SigninResponseType = {
-  message: string;
-  user: {
-    userId: string;
-    email: string;
-    token: string;
-    usernmae: string;
-  };
-};
-
-type SignupResponseType = {
-  message: string;
-  userId: string;
-  token: string;
-};
-
-type ResponseType = SigninResponseType & SignupResponseType;
+import { ResponseType } from "../types/apiResponseType";
 
 export const signinRequest = async <T>(
   formData: T,

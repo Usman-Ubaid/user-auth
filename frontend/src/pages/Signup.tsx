@@ -2,12 +2,7 @@ import { signinRequest } from "../api/authRequest";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
-
-export type SignupFormState = {
-  username: "";
-  email: string;
-  password: string;
-};
+import { SignupFormState } from "../types/formStateTypes";
 
 const Signup = () => {
   const { formData, handleInputChange } = useForm<SignupFormState>({

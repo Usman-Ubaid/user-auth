@@ -4,11 +4,7 @@ import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
 import { saveAuthToken } from "../utils/saveAuthToken";
-
-export type SigninFormState = {
-  email: string;
-  password: string;
-};
+import { SigninFormState } from "../types/formStateTypes";
 
 const Signin = () => {
   const { formData, handleInputChange } = useForm<SigninFormState>({
