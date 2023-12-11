@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { signinRequest } from "../api/authRequest";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
+import { saveAuthToken } from "../utils/saveAuthToken";
 
 export type SigninFormState = {
   email: string;
@@ -14,6 +16,8 @@ const Signin = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await signinRequest(formData, "signin");
@@ -21,7 +25,9 @@ const Signin = () => {
       console.log("Invalid Credentials");
       return;
     }
-    console.log(response?.user);
+    console.log("Logged In Successfully");
+    saveAuthToken(response?.user.token);
+    navigate("/");
   };
 
   return (

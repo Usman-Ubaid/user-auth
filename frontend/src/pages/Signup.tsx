@@ -23,7 +23,7 @@ const Signup = () => {
       console.log("Error registering");
       return;
     }
-    console.log(response?.userId);
+    console.log("Successfully Registered");
   };
   return (
     <div>
