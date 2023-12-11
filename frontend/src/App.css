@@ -131,3 +131,7 @@ input:not(:placeholder-shown) + label {
   cursor: pointer;
   background-color: rgba(0, 95, 159, 0.9);
 }
+
+.btn:disabled {
+  background-color: #005f9f;
+}
