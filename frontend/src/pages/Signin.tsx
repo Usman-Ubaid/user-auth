@@ -17,13 +17,15 @@ const Signin = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await signinRequest(formData, "api/signin");
-    if (!response) {
-      console.log("Invalid Credentials");
+    if (response?.user) {
+      saveAuthToken(response?.user.token);
+      window.alert("Logged In Successfullly");
+      navigate("/");
+      return;
+    } else {
+      window.alert("Invalid Credentials");
       return;
     }
-    console.log("Logged In Successfully");
-    saveAuthToken(response?.user.token);
-    navigate("/");
   };
 
   return (

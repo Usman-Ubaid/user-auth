@@ -16,14 +16,6 @@ export const signinRequest = async <T>(
       }
     );
 
-    if (!postData.ok) {
-      if (resource === "signin") {
-        throw new Error("Error signing in");
-      } else if (resource === "signup") {
-        throw new Error("Failed to register");
-      }
-    }
-
     const response: ResponseType = await postData.json();
     return response;
   } catch (error) {
