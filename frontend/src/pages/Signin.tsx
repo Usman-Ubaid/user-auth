@@ -3,7 +3,7 @@ import { signinRequest } from "../api/authRequest";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
-import { saveAuthToken } from "../utils/saveAuthToken";
+import { saveAuthToken } from "../utils/localStorageutils";
 import { SigninFormState } from "../types/formStateTypes";
 
 const Signin = () => {
