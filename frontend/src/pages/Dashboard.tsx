@@ -2,15 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { removeAuthToken } from "../utils/localStorageUtils";
 import { useEffect, useState } from "react";
 import { fetchDashboardData } from "../api/getDashboardData";
-
-type DataType = {
-  message: string;
-  user: {
-    userId: string;
-    username: string;
-    email: string;
-  };
-};
+import { DataType } from "../types/dashboardDataType";
 
 const Dashboard = () => {
   const [data, setData] = useState<DataType | undefined>();

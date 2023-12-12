@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { signinRequest } from "../api/authRequest";
+import { authRequest } from "../api/authRequest";
 import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
@@ -16,7 +16,7 @@ const Signin = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await signinRequest(formData, "/signin");
+    const response = await authRequest(formData, "/signin");
     if (response?.user) {
       saveAuthToken(response?.user.token);
       window.alert("Logged In Successfullly");

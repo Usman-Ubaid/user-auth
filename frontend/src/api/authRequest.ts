@@ -1,6 +1,6 @@
 import { ResponseType } from "../types/apiResponseType";
 
-export const signinRequest = async <T>(
+export const authRequest = async <T>(
   formData: T,
   resource: string
 ): Promise<ResponseType | undefined> => {
