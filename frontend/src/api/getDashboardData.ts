@@ -5,7 +5,7 @@ export const fetchDashboardData = async (navigate: NavigateFunction) => {
   if (token) {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_KEY}/api/dashboard`,
+        `${import.meta.env.VITE_API_KEY}/dashboard`,
         {
           method: "GET",
           headers: {
