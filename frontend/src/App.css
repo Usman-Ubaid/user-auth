@@ -140,7 +140,7 @@ input:not(:placeholder-shown) + label {
 
 .dashboard {
   height: 100vh;
-  background: linear-gradient(#00000082, #cccccc00);
+  background: linear-gradient(#0000003c, #ccccccfb );
   display: grid;
   grid-template-rows: 100px calc(100vh - 100px);
 }
@@ -162,24 +162,27 @@ input:not(:placeholder-shown) + label {
 }
 
 .dashboard .body h1 {
-  font-size: 3.5rem;
-  background: -webkit-linear-gradient(45deg, #00229f, #f2ff00);
+  font-size: 2.8rem;
+  background: -webkit-linear-gradient(45deg, #00229f, #ff8800);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 0 1rem;
+  margin: 0 3rem;
   padding: 1rem 1rem;
-  box-shadow: 5px 5px 5px #000, -5px -5px 5px #000 ;
+  box-shadow: 5px 5px 5px #000, -5px -5px 5px #000;
   border-radius: 5px;
+  text-align: center;
 }
 
 @media (width <= 768px) {
   .dashboard .body h1 {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+    text-align: center;
   }
 }
 
 @media (width <= 525px) {
   .dashboard .body h1 {
-    font-size: 1.5rem;
+    font-size: 1rem;
+    text-align: center;
   }
 }

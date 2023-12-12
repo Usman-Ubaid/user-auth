@@ -1,16 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import { removeAuthToken } from "../utils/localStorageUtils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchDashboardData } from "../api/getDashboardData";
 
+type DataType = {
+  message: string;
+  user: {
+    userId: string;
+    username: string;
+    email: string;
+  };
+};
+
 const Dashboard = () => {
+  const [data, setData] = useState<DataType | undefined>();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchDashboardData(navigate);
+      const response = await fetchDashboardData(navigate);
+      if (response) {
+        setData(response);
+      }
     };
-
     fetchData();
   }, [navigate]);
 
@@ -18,6 +30,7 @@ const Dashboard = () => {
     removeAuthToken();
     navigate("/signin");
   };
+
   return (
     <div className="dashboard">
       <nav>
@@ -26,7 +39,9 @@ const Dashboard = () => {
         </button>
       </nav>
       <section className="body">
-        <h1>Thank You for Signing in</h1>
+        <h1>
+          Thank You for Signing in, {data && data?.user?.username.toUpperCase()}
+        </h1>
       </section>
     </div>
   );
