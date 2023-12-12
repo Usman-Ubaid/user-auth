@@ -135,3 +135,51 @@ input:not(:placeholder-shown) + label {
 .btn:disabled {
   background-color: #005f9f;
 }
+
+/* DASHBOARD */
+
+.dashboard {
+  height: 100vh;
+  background: linear-gradient(#00000082, #cccccc00);
+  display: grid;
+  grid-template-rows: 100px calc(100vh - 100px);
+}
+
+.dashboard nav {
+  margin: 3rem 3rem 0 0;
+}
+
+.dashboard nav .btn {
+  width: 100px;
+  float: right;
+}
+
+.dashboard .body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+.dashboard .body h1 {
+  font-size: 3.5rem;
+  background: -webkit-linear-gradient(45deg, #00229f, #f2ff00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0 1rem;
+  padding: 1rem 1rem;
+  box-shadow: 5px 5px 5px #000, -5px -5px 5px #000 ;
+  border-radius: 5px;
+}
+
+@media (width <= 768px) {
+  .dashboard .body h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (width <= 525px) {
+  .dashboard .body h1 {
+    font-size: 1.5rem;
+  }
+}
