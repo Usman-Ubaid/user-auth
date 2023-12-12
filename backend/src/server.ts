@@ -16,6 +16,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", userRouter);
 app.use("/api", dashboardRouter);
 
+app.get("/", (req, res) => {
+  res.send("Hello from Server");
+});
+
 app.listen(myEnvVariables.PORT, () => {
   console.log(`server running on http://localhost:${myEnvVariables.PORT}`);
 });
