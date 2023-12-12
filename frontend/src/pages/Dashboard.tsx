@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { removeAuthToken } from "../utils/localStorageutils";
+import { removeAuthToken } from "../utils/localStorageUtils";
 
 const Dashboard = () => {
   const navigate = useNavigate();
