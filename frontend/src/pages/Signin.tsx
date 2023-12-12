@@ -5,8 +5,10 @@ import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
 import { saveAuthToken } from "../utils/localStorageUtils";
 import { SigninFormState } from "../types/formStateTypes";
+import { useState } from "react";
 
 const Signin = () => {
+  const [error, setError] = useState<string | null>(null);
   const { formData, handleInputChange } = useForm<SigninFormState>({
     email: "",
     password: "",
@@ -19,13 +21,14 @@ const Signin = () => {
     const response = await authRequest(formData, "/signin");
     if (response?.user) {
       saveAuthToken(response?.user.token);
-      window.alert("Logged In Successfullly");
       navigate("/");
       return;
-    } else {
-      window.alert("Invalid Credentials");
-      return;
     }
+    setError("Invalid Credentials");
+    setTimeout(() => {
+      setError(null);
+    }, 3000);
+    return;
   };
 
   return (
@@ -33,6 +36,7 @@ const Signin = () => {
       <div className="form-wrapper">
         <form className="form" onSubmit={handleSubmit}>
           <div>
+            {error && <p className="error-message">{error}</p>}
             <h2>Sign In</h2>
           </div>
           <LabelInput

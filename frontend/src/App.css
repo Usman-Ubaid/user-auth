@@ -53,6 +53,18 @@ a:hover {
   border-radius: 5px;
 }
 
+.form .error-message {
+  margin-bottom: 2rem;
+  color: red;
+  text-align: center;
+}
+
+.form .success-message {
+  margin-bottom: 2rem;
+  color: rgb(0, 139, 0);
+  text-align: center;
+}
+
 .form h2 {
   font-size: 2rem;
   display: block;
@@ -140,7 +152,7 @@ input:not(:placeholder-shown) + label {
 
 .dashboard {
   height: 100vh;
-  background: linear-gradient(#0000003c, #ccccccfb );
+  background: linear-gradient(#0000003c, #ccccccfb);
   display: grid;
   grid-template-rows: 100px calc(100vh - 100px);
 }

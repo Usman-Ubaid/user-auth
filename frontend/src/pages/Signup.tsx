@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
 import { SignupFormState } from "../types/formStateTypes";
-import { useNavigate } from "react-router-dom";
+import { timeout } from "../utils/resetFormState";
 
 const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -18,36 +18,23 @@ const Signup = () => {
     }
   );
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     const response = await authRequest(formData, "/signup");
     if (response?.message === "User already exists") {
       setError("User already exists");
-      setIsSubmitting(false);
+      timeout(setIsSubmitting, setError);
       return;
     }
-    if (response) {
-      setSuccess("Registered Successfully");
-      navigate("/signin");
-      setIsSubmitting(false);
-    } else {
+    if (!response) {
       setError("Failed to Register");
-      setIsSubmitting(false);
+      timeout(setIsSubmitting, setError);
+    } else {
+      setSuccess("Registered Successfully");
+      timeout(setIsSubmitting, setSuccess, setFormData);
+      return;
     }
-
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-      });
-      setError(null);
-      setSuccess(null);
-    }, 3000);
   };
   return (
     <div>
@@ -55,8 +42,8 @@ const Signup = () => {
         <div className="form-wrapper">
           <form className="form" onSubmit={handleSubmit}>
             <div>
-              {error && <p>{error}</p>}
-              {success && <p>{success}</p>}
+              {error && <p className="error-message">{error}</p>}
+              {success && <p className="success-message">{success}</p>}
               <h2>Sign Up</h2>
             </div>
             <LabelInput
