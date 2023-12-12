@@ -18,7 +18,7 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const response = await signinRequest(formData, "api/signup");
+    const response = await signinRequest(formData, "/signup");
     if (response) {
       console.log("Successfully Registered");
     } else {

@@ -16,7 +16,7 @@ const Signin = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await signinRequest(formData, "api/signin");
+    const response = await signinRequest(formData, "/signin");
     if (response?.user) {
       saveAuthToken(response?.user.token);
       window.alert("Logged In Successfullly");

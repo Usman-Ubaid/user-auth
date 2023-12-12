@@ -7,6 +7,8 @@ import { router as dashboardRouter } from "./routes/dashboardRoute";
 
 const app = express();
 
+const port = myEnvVariables.PORT || 5000;
+
 connection();
 app.use(cors());
 
@@ -20,6 +22,6 @@ app.get("/", (req, res) => {
   res.send("Hello from Server");
 });
 
-app.listen(myEnvVariables.PORT, () => {
-  console.log(`server running on http://localhost:${myEnvVariables.PORT}`);
+app.listen(port, () => {
+  console.log(`server running on PORT: ${port}`);
 });
