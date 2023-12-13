@@ -193,6 +193,11 @@ input:not(:placeholder-shown) + label {
 }
 
 @media (width <= 525px) {
+  .form {
+    width: 350px;
+    padding: 2rem;
+  }
+
   .dashboard .body h1 {
     font-size: 1rem;
     text-align: center;

@@ -30,9 +30,11 @@ const Signin = () => {
       setTimeout(() => {
         setError(null);
       }, 3000);
-      return;
     } else {
       setError("Invalid Email Address");
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
     }
   };
 
