@@ -5,6 +5,7 @@ import LabelInput from "../components/formComponents/LabelInput";
 import { useForm } from "../hooks/useForm";
 import { SignupFormState } from "../types/formStateTypes";
 import { timeout } from "../utils/resetFormState";
+import { validateEmail } from "../utils/emailValidation";
 
 const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -21,19 +22,24 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const response = await authRequest(formData, "/signup");
-    if (response?.message === "User already exists") {
-      setError("User already exists");
-      timeout(setIsSubmitting, setError);
-      return;
-    }
-    if (!response) {
-      setError("Failed to Register");
-      timeout(setIsSubmitting, setError);
+    if (validateEmail(formData.email)) {
+      const response = await authRequest(formData, "/signup");
+      if (response?.message === "User already exists") {
+        setError("User already exists");
+        timeout(setIsSubmitting, setError);
+        return;
+      }
+      if (!response) {
+        setError("Failed to Register");
+        timeout(setIsSubmitting, setError);
+      } else {
+        setSuccess("Registered Successfully");
+        timeout(setIsSubmitting, setSuccess, setFormData);
+        return;
+      }
     } else {
-      setSuccess("Registered Successfully");
-      timeout(setIsSubmitting, setSuccess, setFormData);
-      return;
+      setError("Invalid email address");
+      timeout(setIsSubmitting, setError);
     }
   };
   return (

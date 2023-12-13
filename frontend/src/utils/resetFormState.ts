@@ -2,9 +2,8 @@ import { SignupFormState } from "../types/formStateTypes";
 
 export const timeout = (
   setIsSubmitting: React.Dispatch<React.SetStateAction<boolean>>,
-  setError?: React.Dispatch<React.SetStateAction<string | null>>,
-  setFormData?: React.Dispatch<React.SetStateAction<SignupFormState>>,
-  setSuccess?: React.Dispatch<React.SetStateAction<string | null>>
+  setMessage?: React.Dispatch<React.SetStateAction<string | null>>,
+  setFormData?: React.Dispatch<React.SetStateAction<SignupFormState>>
 ) => {
   setTimeout(() => {
     if (setFormData) {
@@ -14,12 +13,10 @@ export const timeout = (
         password: "",
       });
     }
-    if (setError) {
-      setError(null);
+    if (setMessage) {
+      setMessage(null);
     }
-    if (setSuccess) {
-      setSuccess(null);
-    }
+
     setIsSubmitting(false);
   }, 3000);
 };

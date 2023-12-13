@@ -6,6 +6,7 @@ import { useForm } from "../hooks/useForm";
 import { saveAuthToken } from "../utils/localStorageUtils";
 import { SigninFormState } from "../types/formStateTypes";
 import { useState } from "react";
+import { validateEmail } from "../utils/emailValidation";
 
 const Signin = () => {
   const [error, setError] = useState<string | null>(null);
@@ -18,17 +19,21 @@ const Signin = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await authRequest(formData, "/signin");
-    if (response?.user) {
-      saveAuthToken(response?.user.token);
-      navigate("/");
+    if (validateEmail(formData.email)) {
+      const response = await authRequest(formData, "/signin");
+      if (response?.user) {
+        saveAuthToken(response?.user.token);
+        navigate("/");
+        return;
+      }
+      setError("Invalid Credentials");
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
       return;
+    } else {
+      setError("Invalid Email Address");
     }
-    setError("Invalid Credentials");
-    setTimeout(() => {
-      setError(null);
-    }, 3000);
-    return;
   };
 
   return (
